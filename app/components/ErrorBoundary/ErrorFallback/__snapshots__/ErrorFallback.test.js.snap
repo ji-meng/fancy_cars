@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ErrorFallback /> should match snapshot 1`] = `
+<ErrorFallback>
+  <p>
+    Uh oh! Something went wrong here
+  </p>
+</ErrorFallback>
+`;

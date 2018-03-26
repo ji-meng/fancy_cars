@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`User Actions loadUser should match snapshot 1`] = `
+Object {
+  "type": "fe-app-boilerplate/ExamplePage/LOAD_USER_REQUESTED",
+}
+`;
+
+exports[`User Actions loadUserFail should match snapshot 1`] = `
+Object {
+  "payload": Object {
+    "error": undefined,
+  },
+  "type": "fe-app-boilerplate/ExamplePage/LOAD_USER_FAILED",
+}
+`;
+
+exports[`User Actions loadUserSuccess should match snapshot 1`] = `
+Object {
+  "payload": Object {
+    "currentUserData": Object {
+      "email": "jer@yolo.net",
+      "name": "Jeremy Sant",
+    },
+  },
+  "type": "fe-app-boilerplate/ExamplePage/LOAD_USER_SUCCESS",
+}
+`;

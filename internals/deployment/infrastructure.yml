@@ -1,0 +1,93 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: "A Template for deploying a static React app to S3 + Cloudfront"
+
+Parameters:
+  AppName:
+    Type: String
+    Description: Enter the name of the app
+  BucketName:
+    Type: String
+    Description: Enter the name of the S3 Bucket that will hold the static files
+  CertificateArn:
+    Type: String
+    Description: The arn of the SSL Certificate to use
+  DomainName:
+    Type: String
+    Description: The domain name that the distribution will be served under
+  HostedZoneName:
+    Type: String
+    Description: The hosted zone that the DNS record will be set in
+
+Resources:
+  Bucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Ref BucketName
+      CorsConfiguration:
+        CorsRules:
+        - AllowedOrigins:
+          - https://test.com
+          - https://app.test.com
+          - !Join ['', ['https://', !Ref DomainName]]
+          AllowedMethods:
+          - GET
+          AllowedHeaders:
+          - '*'
+      VersioningConfiguration:
+        Status: Enabled
+      WebsiteConfiguration:
+        IndexDocument: index.html
+
+  BucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref BucketName
+      PolicyDocument:
+        Statement:
+        - Action:
+            - s3:GetObject
+          Effect: Allow
+          Resource: !Join ['', ['arn:aws:s3:::', !Ref BucketName, '/*']]
+          Principal: '*'
+
+  Distribution:
+    Type: AWS::CloudFront::Distribution
+    Properties:
+        DistributionConfig:
+          Aliases:
+          - !Ref DomainName
+          Comment: !Join [' ', ['The Frontend for', !Ref AppName]]
+          CustomErrorResponses:
+          - ErrorCachingMinTTL: 300
+            ErrorCode: 403
+            ResponseCode: 200
+            ResponsePagePath: /index.html
+          DefaultCacheBehavior:
+            Compress: true
+            ForwardedValues:
+              QueryString: true
+              QueryStringCacheKeys:
+              - nocache
+            TargetOriginId: !Ref BucketName
+            ViewerProtocolPolicy: redirect-to-https
+          DefaultRootObject: index.html
+          Enabled: true
+          Origins:
+          - CustomOriginConfig:
+              OriginProtocolPolicy: https-only
+            DomainName: !Join ['', [!Ref BucketName, '.s3.amazonaws.com']]
+            Id: !Ref BucketName
+          ViewerCertificate:
+            AcmCertificateArn: !Ref CertificateArn
+            SslSupportMethod: sni-only
+
+  DNSRecord:
+    Type: AWS::Route53::RecordSet
+    Properties:
+      AliasTarget:
+        DNSName: !GetAtt Distribution.DomainName
+        HostedZoneId: Z2FDTNDATAQYW2
+      Comment: !Join [' ', ['The DNS Record for', !Ref AppName]]
+      HostedZoneName: !Ref HostedZoneName
+      Name: !Ref DomainName
+      Type: A

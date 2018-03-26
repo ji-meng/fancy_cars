@@ -1,0 +1,43 @@
+{
+    "bail": false,
+    "collectCoverageFrom": [
+        "app/**/*.js",
+        "!app/**/*.test.js",
+        "!app/**/stories.js"
+    ],
+    "coverageDirectory": "./artifacts/coverage",
+    "moduleNameMapper": {
+        "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/internals/testing/mocks/image.js",
+        "\\.(scss|css|less)$": "<rootDir>/internals/testing/mocks/css.js"
+    },
+    "modulePaths": [
+        "<rootDir>/app"
+    ],
+    "notify": false,
+    "resetMocks": false,
+    "resetModules": false,
+    "rootDir": "../..",
+    "setupFiles": [
+        "<rootDir>/internals/testing/requestAnimationFrameShim.js",
+        "<rootDir>/internals/testing/enzymeSetup.js"
+    ],
+    "setupTestFrameworkScriptFile": "<rootDir>/internals/testing/frameworkSetup.js",
+    "snapshotSerializers": [
+        "enzyme-to-json/serializer"
+    ],
+    "testPathIgnorePatterns": [
+        "/artifacts/",
+        "/internals/",
+        "/server",
+        "/node_modules/"
+    ],
+    "testRegex": "((\\.|/)test)\\.jsx?$",
+    "timers": "real",
+    "transformIgnorePatterns": [
+        "node_modules/(?!(@thm/.+/index\\.js))"
+    ],
+    "unmockedModulePathPatterns": [
+        "<rootDir>/node_modules/react"
+    ],
+    "verbose": false
+}

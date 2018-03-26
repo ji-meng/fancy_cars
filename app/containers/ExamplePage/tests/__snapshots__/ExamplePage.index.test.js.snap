@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ExamplePage /> should match snapshot 1`] = `
+<ExamplePage__CenteredDiv>
+  <HelmetWrapper
+    encodeSpecialCharacters={true}
+  >
+    <title>
+      Users
+    </title>
+    <meta
+      content="The user example page"
+      name="description"
+    />
+  </HelmetWrapper>
+  <h1>
+    Hello, World!
+  </h1>
+  <p>
+    Loading User...
+  </p>
+</ExamplePage__CenteredDiv>
+`;

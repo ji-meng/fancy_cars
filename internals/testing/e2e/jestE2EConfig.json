@@ -1,0 +1,17 @@
+{
+    "bail": false,
+    "globalSetup": "<rootDir>/internals/testing/e2e/setupPuppeteer.js",
+    "globalTeardown": "<rootDir>/internals/testing/e2e/teardownPuppeteer.js",
+    "modulePaths": [
+        "app"
+    ],
+    "notify": false,
+    "resetMocks": false,
+    "resetModules": false,
+    "rootDir": "../../..",
+    "setupTestFrameworkScriptFile": "<rootDir>/internals/testing/e2e/e2eFrameworkSetup.js",
+    "testEnvironment": "<rootDir>/internals/testing/e2e/e2eTestEnvironment.js",
+    "testRegex": "((\\.|/)e2e)\\.js$",
+    "timers": "real",
+    "verbose": false
+}
